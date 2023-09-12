@@ -296,33 +296,59 @@ const ctre = {
 
     if (ctre.hiddenElements.length) {
       lines.push(
-        '<table><tr class="ct_heading" style="padding:6px 0;"><td>Removed element</td><td>Remember?</td><td></td></tr>'
+        '<div class="table"><div class="ct_tr ct_heading row heading" ><div class="cell">Removed element</div><div class="cell">Remember?</div><div class="cell"></div></div>'
       )
 
       for (let elm of ctre.hiddenElements) {
         lines.push(`
         
-        <tr>
-        <td class="ct_selector"><a href="" class="ct_edit_selector">edit</a>${escapeHTML(
-          elm.selector
-        )}</td>
-					<td><input type="checkbox"${elm.permanent ? " checked" : ""}></td>
-					<td><span class="ct_preview">👁</span> <a href="" class="ct_delete">✖</a></td>
-				</tr>
+        <div class="row ct_tr" >
+          <div class="ct_selector cell"><a href="" class="ct_edit_selector">edit</a>${escapeHTML(
+            elm.selector
+          )}</div>
+					<div class="cell"><input type="checkbox"${
+            elm.permanent ? " checked" : ""
+          }></div>
+					<div class="cell actions"><span class="ct_preview">👁</span> <a href="" class="ct_delete">✖</a></div>
+				</div>
 
         `)
       }
 
-      lines.push("</table>")
+      lines.push("</div>")
       elmList.classList.add("hasContent")
     } else {
       elmList.classList.remove("hasContent")
     }
+    // if (ctre.hiddenElements.length) {
+    //   lines.push(
+    //     '<table><tr class="ct_heading" style="padding:6px 0;"><td>Removed element</td><td>Remember?</td><td></td></tr>'
+    //   )
+
+    //   for (let elm of ctre.hiddenElements) {
+    //     lines.push(`
+
+    //     <tr class="ct_tr">
+    //       <td class="ct_selector"><a href="" class="ct_edit_selector">edit</a>${escapeHTML(
+    //         elm.selector
+    //       )}</td>
+    // 			<td><input type="checkbox"${elm.permanent ? " checked" : ""}></td>
+    // 			<td><span class="ct_preview">👁</span> <a href="" class="ct_delete">✖</a></td>
+    // 		</tr>
+
+    //     `)
+    //   }
+
+    //   lines.push("</table>")
+    //   elmList.classList.add("hasContent")
+    // } else {
+    //   elmList.classList.remove("hasContent")
+    // }
 
     elmList.innerHTML = lines.join("\n")
 
     function onChangePermanent() {
-      var tr = closest(this, "tr")
+      var tr = closest(this, ".ct_tr")
       let index = ctre.hiddenElements.findIndex(
         (elm) => elm.selector == tr.selector
       )
@@ -333,7 +359,7 @@ const ctre = {
     }
 
     function onDeleteClick(e) {
-      let tr = closest(this, "tr")
+      let tr = closest(this, ".ct_tr")
 
       if (tr.selector) {
         let index = ctre.hiddenElements.findIndex(
@@ -352,7 +378,7 @@ const ctre = {
     }
 
     function onPreviewHoverOn(e) {
-      let selector = closest(this, "tr").selector
+      let selector = closest(this, ".ct_tr").selector
       if (!selector) return
 
       ctre.previewedHiddenSelector = selector
@@ -360,7 +386,7 @@ const ctre = {
     }
 
     function onPreviewHoverOff(e) {
-      let selector = closest(this, "tr").selector
+      let selector = closest(this, ".ct_tr").selector
       if (!selector) return
 
       if (ctre.previewedHiddenSelector == selector) {
@@ -373,7 +399,7 @@ const ctre = {
       e.preventDefault()
       e.stopPropagation()
 
-      let tr = closest(this, "tr")
+      let tr = closest(this, ".ct_tr")
 
       if (tr.selector) {
         let hiddenElement = ctre.hiddenElements.find(
@@ -395,7 +421,8 @@ const ctre = {
     }
 
     let i = -1
-    for (let tr of ctre.$$("#ctre_elm_list table tr")) {
+    for (let tr of ctre.$$("#ctre_elm_list .ct_tr")) {
+      // for (let tr of ctre.$$("#ctre_elm_list table tr")) {
       if (i < 0) {
         // skip heading
         i++
@@ -409,6 +436,9 @@ const ctre = {
         onChangePermanent,
         false
       )
+
+      let inpu = tr.querySelector("input")
+      console.log("inpu: ", inpu)
       tr.querySelector("a.ct_delete").addEventListener(
         "click",
         onDeleteClick,
@@ -499,9 +529,9 @@ const ctre = {
 			<link rel="stylesheet" href="${chrome.runtime.getURL("content.css")}">
 			<div class="ct_root">
 
-      <div id="dragButton" class="drag-button" style="border-radius:8px; width: 25px; height: 25px; background-color: #2a8682; position: absolute; top: -3px; left: -3px; cursor: move; display: flex; justify-content: center; align-items: center;">
-        <span style="font-size: 16px; cursor: move;">↖</span>
-      </div>
+        <div id="dragButton" class="drag-button" style="border-radius:8px; width: 25px; height: 25px; background-color: #2a8682; position: absolute; top: -3px; left: -3px; cursor: move; display: flex; justify-content: center; align-items: center;">
+          <span style="font-size: 16px; cursor: move;">↖</span>
+        </div>
 
 				<span class="ct_logo">
         <span style="text-align:center; display:block;">Click to remove distraction</span>
@@ -574,7 +604,6 @@ const ctre = {
     // 		`
 
     const dragButton = shadowElm.shadowRoot.querySelector("#dragButton")
-
     dragButton.addEventListener("mousedown", dragStart)
 
     function dragStart(e) {

@@ -4,6 +4,10 @@
   --light-color: #d3eae8;
 }
 
+html {
+  box-sizing: border-box;
+}
+
 p {
   color: var(--light-color);
 }
@@ -175,24 +179,20 @@ p {
   max-height: 200px;
 }
 
+/* --------------------------------------------------- old styles for <TR> */
+
 #ctre_elm_list table {
   border: 0;
   width: 100%;
   border-spacing: 0;
 }
 
-#ctre_elm_list tr {
-  /* display: block; */
-  border: 0;
-  padding-top: 6px;
-  padding-bottom: 6px;
-}
-
-#ctre_elm_list tr.ct_heading td {
+#ctre_elm_list .ct_heading {
+  background-color: #0f172a;
   position: sticky;
   top: 0;
   color: #bbb;
-  padding: 6px;
+  /* padding: 6px; */
 }
 
 #ctre_elm_list tr.ct_heading {
@@ -200,8 +200,8 @@ p {
 }
 
 #ctre_elm_list td {
-  padding: 0;
-  border: 0;
+  padding: 4px;
+  border: 1px solid red;
   /* background: #f7f7f7; */
   background: var(--background);
 }
@@ -210,6 +210,7 @@ p {
   background: #fcfcfc;
   background-color: #0f172a;
 } */
+
 #ctre_elm_list tr td {
   background-color: #0f172a;
 }
@@ -237,18 +238,82 @@ p {
 }
 
 #ctre_elm_list .ct_edit_selector:hover {
-  color: #000;
+  color: #0fb4d4;
 }
 
+/* #ctre_elm_list tr:hover .ct_edit_selector {
+  opacity: 1;
+} */
 #ctre_elm_list tr:hover .ct_edit_selector {
   opacity: 1;
 }
+
+/* --------------------------------------------------- old styles for <TR> */
+
+/*  */
+/*  */
+/*  */
+/* new styles changing tr for new div selectors  */
+
+#ctre_elm_list .table {
+  display: table;
+  width: 100%;
+  /* border-collapse: collapse; */
+}
+
+#ctre_elm_list .row {
+  display: table-row;
+}
+
+#ctre_elm_list .cell {
+  display: table-cell;
+  padding: 4px;
+  background: var(--background);
+}
+
+#ctre_elm_list .heading.cell {
+  position: sticky;
+  top: 0;
+  color: #bbb;
+  padding: 6px;
+}
+
+#ctre_elm_list .ct_tr .cell:nth-child(1) {
+  padding-left: 10px;
+}
+
+#ctre_elm_list .ct_tr .cell:nth-child(2) {
+  text-align: center;
+  width: 80px;
+}
+
+#ctre_elm_list .ct_tr:not(.heading) .cell:nth-child(1) {
+  font-family: monospace;
+  font-size: 11px;
+}
+
+#ctre_elm_list .ct_edit_selector {
+  font-family: sans-serif;
+  float: right;
+  opacity: 0;
+  color: #0fb4d4;
+  text-decoration: none;
+}
+
+#ctre_elm_list .ct_tr:hover .ct_edit_selector {
+  opacity: 1;
+}
+
+/*  */
+/*  */
+/*  */
+/*  */
 
 #ctre_elm_list a.ct_delete {
   color: #f00;
   padding: 4px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 #ctre_elm_list a.ct_delete:hover {
@@ -261,7 +326,7 @@ p {
   color: #0fb4d4;
   padding: 4px;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 20px;
 }
 
 #ctre_elm_list .ct_preview:hover {
@@ -336,13 +401,14 @@ p {
 }
 
 .ct_selector {
+  /* width: 50%; */
   width: 60%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  /* width: 100%; */
   flex-direction: row-reverse;
-  padding: 8px 4px;
+  padding: 8px 0 8px 4px;
 }
 
 /* 
@@ -362,7 +428,35 @@ p {
   border-radius: 12px;
 }
 
-/* ::-webkit-scrollbar-track the track (progress bar) of the scrollbar.
-::-webkit-scrollbar-track-piece the track (progress bar) NOT covered by the handle.
-::-webkit-scrollbar-corner the bottom corner of the scrollbar, where both horizontal and vertical scrollbars meet.
-::-webkit-resizer the draggable resizing handle that appears at the bottom corner of some elements. */
+/* #ctre_elm_list tr {
+  /* display: block; 
+  border: 0;
+  padding-top: 6px;
+  padding-bottom: 6px;
+} */
+
+/* table */
+.table {
+  display: table;
+  width: 100%;
+}
+.row {
+  display: table-row;
+  /* border: 1px solid transparent; */
+}
+
+.cell {
+  display: table-cell;
+
+  padding: 6px 0;
+  /* border: 1px solid white; */
+}
+
+.cell.actions {
+  display: flex;
+  align-items: center;
+}
+
+.heading .cell {
+  font-weight: bold;
+}
