@@ -237,11 +237,13 @@ const ctre = {
     let cssLines = [
       `
 			#ctre_wnd {
-				position: fixed; bottom: 0; right: 10px;
+				position: fixed; top: 10px; right: 5px;
 			    width: fit-content !important;
   				height: fit-content !important;
-				background: #fff; box-shadow: 0px 0px 40px rgba(0,0,0,0.15);
-				border-radius: 3px 3px 0 0;
+				background: #0f172a; box-shadow: 0px 0px 40px rgba(0,0,0,0.15);
+        color:white;
+				border-radius: 12px;
+        border:2px solid #2a8682;
 				z-index: ${ctre.maxZIndex};
 			}
 			`,
@@ -294,17 +296,21 @@ const ctre = {
 
     if (ctre.hiddenElements.length) {
       lines.push(
-        '<table><tr class="ct_heading"><td>Removed element</td><td>Remember?</td><td></td></tr>'
+        '<table><tr class="ct_heading" style="padding:6px 0;"><td>Removed element</td><td>Remember?</td><td></td></tr>'
       )
 
       for (let elm of ctre.hiddenElements) {
-        lines.push(`<tr>
-					<td class="ct_selector"><a href="" class="ct_edit_selector">edit</a>${escapeHTML(
-            elm.selector
-          )}</td>
+        lines.push(`
+        
+        <tr>
+        <td class="ct_selector"><a href="" class="ct_edit_selector">edit</a>${escapeHTML(
+          elm.selector
+        )}</td>
 					<td><input type="checkbox"${elm.permanent ? " checked" : ""}></td>
 					<td><span class="ct_preview">👁</span> <a href="" class="ct_delete">✖</a></td>
-				</tr>`)
+				</tr>
+
+        `)
       }
 
       lines.push("</table>")
@@ -493,46 +499,79 @@ const ctre = {
 			<link rel="stylesheet" href="${chrome.runtime.getURL("content.css")}">
 			<div class="ct_root">
 
- <div  id="dragButton" class="drag-button" style="border-radius:8px; width: 20px; height: 20px; background-color: #ddd; position: absolute; top: -3px; left: -3px; cursor: move; display: flex; justify-content: center; align-items: center;">
-      <span style="font-size: 16px; cursor: move;">↖</span>
-    </div>
-				
-				<span class="ct_logo">Click to remove element
-					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="-300 -300 600 600">
-					<circle r="50"/>
-					<path d="M75,0 A 75,75 0 0,0 37.5,-64.952 L 125,-216.506 A 250,250 0 0,1 250,0 z" id="bld"/>
-					<use xlink:href="#bld" transform="rotate(120)"/>
-					<use xlink:href="#bld" transform="rotate(240)"/>
-					</svg>
-				</span> <span class="version">v3.0.1</span>
+      <div id="dragButton" class="drag-button" style="border-radius:8px; width: 25px; height: 25px; background-color: #2a8682; position: absolute; top: -3px; left: -3px; cursor: move; display: flex; justify-content: center; align-items: center;">
+        <span style="font-size: 16px; cursor: move;">↖</span>
+      </div>
+
+				<span class="ct_logo">
+        <span style="text-align:center; display:block;">Click to remove distraction</span>
+					
 				<span class="ct_logo small">CTRE</span>
-				<div class="ct_minimize"><i>➜</i></div>
-				<div class="ct_close">✖</div>
+				<div class="ct_close">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="plain-icon-color stroke-[1.5]"><path d="M18 6l-12 12"></path><path d="M6 6l12 12"></path></svg>
+        </div>
 				<div id="ctre_current_elm">Select an element with the mouse</div>
-				<div class="settingsRow">
-					<div class="activationKeys" title="Click to change">
-						Activation hotkey not set
-					</div>
-					<div>
-						<span class="key">Q</span>/<span class="key">W</span>: move up or down one level
-					</div>
-				</div>
+				
 				<div class="settingsRow">
 					<div>
 						Remember by default: <a href="" id="ctre_opt_remember">?</a>
 					</div>
-					<div>
-						<span class="key">SPACE</span>: remove element (when unable to click)
-					</div>
 				</div>
-				<div class="ct_separator"></div>
+        
+
+				<div class="ct_separator" ></div>
 				<div id="ctre_elm_list"></div>
+        
 				<div class="ct_more">
-					Made by <a href="https://blade.sk/?utm_source=ctre" target="_blank" rel="nofollow">blade.sk</a>.
-					Check out my other projects: <a href="https://keyboard.cool/?utm_source=ctre" target="_blank" rel="nofollow">keyboard.cool</a>
+					Modified by <a href="https://twitter.com/js_segu" target="_blank" rel="nofollow">@js_segu</a>.
+					Originally created by: <a href="https://blade.sk" target="_blank" rel="nofollow">blade.sk</a>
 				</div>
 			</div>
 		`
+    //     shadowElm.shadowRoot.innerHTML = `
+    // 			<link rel="stylesheet" href="${chrome.runtime.getURL("content.css")}">
+    // 			<div class="ct_root">
+
+    //  <div  id="dragButton" class="drag-button" style="border-radius:8px; width: 20px; height: 20px; background-color: #ddd; position: absolute; top: -3px; left: -3px; cursor: move; display: flex; justify-content: center; align-items: center;">
+    //       <span style="font-size: 16px; cursor: move;">↖</span>
+    //     </div>
+
+    // 				<span class="ct_logo">Click to remove element
+    // 					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16" height="16" viewBox="-300 -300 600 600">
+    // 					<circle r="50"/>
+    // 					<path d="M75,0 A 75,75 0 0,0 37.5,-64.952 L 125,-216.506 A 250,250 0 0,1 250,0 z" id="bld"/>
+    // 					<use xlink:href="#bld" transform="rotate(120)"/>
+    // 					<use xlink:href="#bld" transform="rotate(240)"/>
+    // 					</svg>
+    // 				</span> <span class="version">v3.0.1</span>
+    // 				<span class="ct_logo small">CTRE</span>
+    // 				<div class="ct_minimize"><i>➜</i></div>
+    // 				<div class="ct_close">✖</div>
+    // 				<div id="ctre_current_elm">Select an element with the mouse</div>
+    // 				<div class="settingsRow">
+    // 					<div class="activationKeys" title="Click to change">
+    // 						Activation hotkey not set
+    // 					</div>
+    // 					<div>
+    // 						<span class="key">Q</span>/<span class="key">W</span>: move up or down one level
+    // 					</div>
+    // 				</div>
+    // 				<div class="settingsRow">
+    // 					<div>
+    // 						Remember by default: <a href="" id="ctre_opt_remember">?</a>
+    // 					</div>
+    // 					<div>
+    // 						<span class="key">SPACE</span>: remove element (when unable to click)
+    // 					</div>
+    // 				</div>
+    // 				<div class="ct_separator"></div>
+    // 				<div id="ctre_elm_list"></div>
+    // 				<div class="ct_more">
+    // 					Made by <a href="https://blade.sk/?utm_source=ctre" target="_blank" rel="nofollow">blade.sk</a>.
+    // 					Check out my other projects: <a href="https://keyboard.cool/?utm_source=ctre" target="_blank" rel="nofollow">keyboard.cool</a>
+    // 				</div>
+    // 			</div>
+    // 		`
 
     const dragButton = shadowElm.shadowRoot.querySelector("#dragButton")
 
@@ -572,33 +611,33 @@ const ctre = {
       shadowElm.style.visibility = "visible"
     })
 
-    chrome.runtime.sendMessage({ action: "get_hotkey" }, (hotkey) => {
-      if (!hotkey) return
+    // chrome.runtime.sendMessage({ action: "get_hotkey" }, (hotkey) => {
+    //   if (!hotkey) return
 
-      let keys = hotkey.split(/\+/)
-      let elm = ctre.$(".activationKeys")
-      let html = [
-        ...keys.map((key) => `<span class="key">${key}</span>`),
-        " : toggle CTRE",
-      ]
+    //   let keys = hotkey.split(/\+/)
+    //   let elm = ctre.$(".activationKeys")
+    //   let html = [
+    //     ...keys.map((key) => `<span class="key">${key}</span>`),
+    //     " : toggle CTRE",
+    //   ]
 
-      if (elm) elm.innerHTML = html.join("")
-    })
+    //   if (elm) elm.innerHTML = html.join("")
+    // })
 
-    ctre.$(".activationKeys").addEventListener("click", function (e) {
-      chrome.runtime.sendMessage({ action: "goto_hotkey_settings" })
-      e.preventDefault()
-    })
+    // ctre.$(".activationKeys").addEventListener("click", function (e) {
+    //   chrome.runtime.sendMessage({ action: "goto_hotkey_settings" })
+    //   e.preventDefault()
+    // })
 
     ctre.$(".ct_close").addEventListener("click", function (e) {
       ctre.deactivate()
       e.preventDefault()
     })
 
-    ctre.$(".ct_minimize").addEventListener("click", function (e) {
-      ctre.$(".ct_root").classList.toggle("minimized")
-      e.preventDefault()
-    })
+    // ctre.$(".ct_minimize").addEventListener("click", function (e) {
+    //   ctre.$(".ct_root").classList.toggle("minimized")
+    //   e.preventDefault()
+    // })
 
     ctre.$("#ctre_opt_remember").addEventListener("click", function (e) {
       ctre.settings.remember = this.textContent == "no"
